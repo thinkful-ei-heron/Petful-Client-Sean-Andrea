@@ -1,8 +1,26 @@
+<<<<<<< HEAD
 import React, {Component} from 'react'
 import { Queue, adoptionQueue, namesArray } from './Queue'
 import PetfulApi from './Services/petful-api-service'
+=======
+import React, { Component } from 'react';
+import { Queue, adoptionQueue } from './Queue';
+import './adoptionPage.css';
+>>>>>>> d8e6f21c11a744c2397a1749fc3a1f3b08a7490c
 
 class AdoptionPage extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			wantsToRegister: false,
+			firstName: '',
+			lastName: '',
+			registered: false,
+			namesDatabase: [],
+			numberInLine: '',
+			Q: ''
+		};
+	}
 
     constructor(props){
         super(props);
@@ -17,8 +35,12 @@ class AdoptionPage extends React.Component {
         }
     }
 
+		setInterval(changeList);
+	}
 
-    componentDidMount(){
+	addToQ = (name) => {
+		adoptionQueue.enqueue(name);
+	};
 
         PetfulApi.getAllCats()
             .then(cat => this.setState({catQ:cat}))
@@ -105,6 +127,60 @@ class AdoptionPage extends React.Component {
     )
     }
 
+	render() {
+		return (
+			<div className="adoptionPage">
+				<div className="adoption">
+					<h1> Welcome to Petful Adoption Center! </h1>
+					<h2> Adoption Page </h2>
+					<div className="dog">
+						<h3>Dogs</h3>
+					</div>
+					<div className="cat">
+						<h3>Cats</h3>
+					</div>
+					<button type="button" onClick={this.clickHandler}>
+						Register
+					</button>
+				</div>
+				{this.state.wantsToRegister === true ? (
+					<div className="registration">
+						<form className="registration-form">
+							<p>
+								Please enter your first name:{' '}
+								<input
+									type="text"
+									placeholder="First Name"
+									name="firstName"
+									onChange={this.handleFirstName}
+								/>
+							</p>
+							<p>
+								Please enter your last name:{' '}
+								<input
+									type="text"
+									placeholder="Last Name"
+									name="lastName"
+									onChange={this.handleLastName}
+								/>
+							</p>
+							<button type="button" onClick={this.submitHandler}>
+								Register For Adoption!
+							</button>
+						</form>
+					</div>
+				) : null}
+				{this.state.registered ? (
+					<div className="registeredUser">
+						<h4>
+							Thank you for your interest, {this.state.firstName} {this.state.lastName}! You are currently
+							number {adoptionQueue.size()} in line
+						</h4>
+					</div>
+				) : null}
+			</div>
+		);
+	}
 }
 
 export default AdoptionPage;
