@@ -4,12 +4,12 @@ const PetfulApi = {
 	url: config.API_ENDPOINT,
 
 	getAllCats() {
-		return fetch(this.url + 'cats/allCats', {}).then(
+		return fetch(this.url + '/cats/allCats', {}).then(
 			(res) => (!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json())
 		);
 	},
 	adoptCat() {
-		return fetch(this.url + 'cats/allCats', { method: 'DELETE' }).then((res) => {
+		return fetch(this.url + '/cats/allCats', { method: 'DELETE' }).then((res) => {
 			if (!res.ok) {
 				return res.json().then((e) => Promise.reject(e));
 			}
@@ -17,12 +17,12 @@ const PetfulApi = {
 		});
 	},
 	getAllDogs() {
-		return fetch(this.url + 'dogs/allDogs', {}).then(
+		return fetch(this.url + '/dogs/allDogs', {}).then(
 			(res) => (!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json())
 		);
 	},
 	adoptDog() {
-		return fetch(this.url + 'dogs/allDogs', { method: 'DELETE' }).then((res) => {
+		return fetch(this.url + '/dogs/allDogs', { method: 'DELETE' }).then((res) => {
 			if (!res.ok) {
 				return res.json().then((e) => Promise.reject(e));
 			}
@@ -30,3 +30,5 @@ const PetfulApi = {
 		});
 	}
 };
+
+export default PetfulApi

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { Queue, adoptionQueue, namesArray } from './Queue'
+import PetfulApi from './Services/petful-api-service'
 
 class AdoptionPage extends React.Component {
 
@@ -11,12 +12,22 @@ class AdoptionPage extends React.Component {
             lastName:'',
             registered:false,
             numberInLine:'',
-            Q:''
+            catQ:'',
+            dogQ:''
         }
     }
 
 
     componentDidMount(){
+
+        PetfulApi.getAllCats()
+            .then(cat => this.setState({catQ:cat}))
+            .catch({error:'An Error has Occurred'})
+        
+        PetfulApi.getAllDogs()
+            .then(dog => this.setState({dogQ:dog}))
+            .catch({error:'An Error has Occurred'})
+        //console.log(list)
 
         
         const changeList=()=>{
@@ -61,7 +72,9 @@ class AdoptionPage extends React.Component {
     }
     
     render(){
+        let cat = this.state.catQ[0]
         return(
+            
         <div className = 'adoptionPage'>
             <div className = 'adoption'>
                 <h1> Welcome to Petful Adoption Center! </h1>
@@ -71,6 +84,7 @@ class AdoptionPage extends React.Component {
                 </div>
                 <div className = 'cat'>
                     <h3>Cats</h3>
+                    <h4></h4>
                 </div>
                 <button type='button' onClick={this.clickHandler}>Register</button>
             </div>
