@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Queue, adoptionQueue } from './Queue'
+import { Queue, adoptionQueue, namesArray } from './Queue'
 
 class AdoptionPage extends React.Component {
 
@@ -10,7 +10,6 @@ class AdoptionPage extends React.Component {
             firstName:'',
             lastName:'',
             registered:false,
-            namesDatabase:[],
             numberInLine:'',
             Q:''
         }
@@ -19,11 +18,18 @@ class AdoptionPage extends React.Component {
 
     componentDidMount(){
 
-        function changeList(){
-
+        
+        const changeList=()=>{
+            console.log('Hello')
+            let temp = adoptionQueue.dequeue()
+            let temp2 = namesArray.pop()
+            adoptionQueue.enqueue(temp2)
+            namesArray.push(temp)
+            console.log(adoptionQueue.display())
         }
 
-        setInterval(changeList, )
+        let j = setInterval(changeList, 10000)
+
     }
 
     addToQ=(name)=>{
@@ -36,10 +42,9 @@ class AdoptionPage extends React.Component {
     }
 
     submitHandler =(e)=>{
+        e.preventDefault()
         let fullName = this.state.firstName + ' ' +  this.state.lastName
-        let added = this.state.namesDatabase.concat(fullName)
         this.setState({wantsToRegister:false,
-                        namesDatabase:added,
                         registered:true})
         this.addToQ(fullName)
         console.log(fullName)

@@ -72,6 +72,7 @@ class Queue {
   }
   
   let adoptionQueue = new Queue();
+  let namesArray = ['Johnny Walker', 'Candace Allen', 'Jimmy Falcone', 'Shannon Goode']
   adoptionQueue.enqueue('Michael Smith')
   adoptionQueue.enqueue('Jasmine Wollock')
   adoptionQueue.enqueue('Blair Greenfield')
@@ -80,6 +81,6 @@ class Queue {
   adoptionQueue.enqueue('Melissa Jones')
   adoptionQueue.enqueue('Fred Kreuger')
 
-  export { Queue, _Node, adoptionQueue }
+  export { Queue, _Node, adoptionQueue, namesArray }
 
 
