@@ -39,52 +39,6 @@ class AdoptionPage extends React.Component {
 		let j = setInterval(changeList, 10000);
 	}
 
-	addToQ = (name) => {
-		adoptionQueue.enqueue(name);
-	};
-
-	clickHandler = (e) => {
-		this.setState({ wantsToRegister: true });
-	};
-
-	submitHandler = (e) => {
-		e.preventDefault();
-		let fullName = this.state.firstName + ' ' + this.state.lastName;
-		this.setState({
-			wantsToRegister: false,
-			registered: true
-		});
-		this.addToQ(fullName);
-		console.log(fullName);
-	};
-
-	handleFirstName = (e) => {
-		e.preventDefault();
-		this.setState({ firstName: e.target.value });
-	};
-
-	handleLastName = (e) => {
-		e.preventDefault();
-		this.setState({ lastName: e.target.value });
-	};
-
-	adoptCat = () => {
-		PetfulApi.adoptCat().then((res) => {
-			window.alert('Congrats, you adopted a cat!');
-			let { catQ } = this.state;
-			catQ.shift();
-			this.setState({ catQ: catQ });
-		});
-	};
-	adoptDog = () => {
-		PetfulApi.adoptDog().then((res) => {
-			window.alert('Congrats, you adopted a dog!');
-			let { dogQ } = this.state;
-			dogQ.shift();
-			this.setState({ dogQ: dogQ });
-		});
-	};
-
 	render() {
 		return (
 			<div className="adoptionPage">
