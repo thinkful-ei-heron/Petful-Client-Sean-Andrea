@@ -42,3 +42,32 @@ h2 {
 	margin-left: 45px;
 	opacity: 0.8;
 }
+img {
+	height: 200px;
+	width: 350px;
+}
+li {
+	list-style: none;
+}
+div .dog-list {
+	display: inline;
+	float: left;
+}
+.dog-list {
+	margin: 10px;
+}
+.dog {
+	margin: 30px;
+	position: relative;
+}
+div .cat-list {
+	display: inline;
+	float: left;
+}
+.cat-list {
+	margin: 10px;
+}
+.cat {
+	margin-top: 20px;
+	position: relative;
+}

@@ -1,87 +1,89 @@
-import React, {Component} from 'react'
-import { Queue, adoptionQueue, namesArray } from './Queue'
-import PetfulApi from './Services/petful-api-service'
+import React, { Component } from 'react';
+import { Queue, adoptionQueue, namesArray } from './Queue';
+import PetfulApi from './Services/petful-api-service';
+import './adoptionPage.css';
 
 class AdoptionPage extends React.Component {
-
-    constructor(props){
-        super(props);
-        this.state = {
-            wantsToRegister : false,
-            firstName:'',
-            lastName:'',
-            registered:false,
-            numberInLine:'',
-            catQ:[],
-            dogQ:[]
-        }
-    }
-
+	constructor(props) {
+		super(props);
+		this.state = {
+			wantsToRegister: false,
+			firstName: '',
+			lastName: '',
+			registered: false,
+			numberInLine: '',
+			catQ: [],
+			dogQ: []
+		};
+	}
 
 	addToQ = (name) => {
 		adoptionQueue.enqueue(name);
-    };
-    
-    componentDidMount(){
-        PetfulApi.getAllCats()
-            .then(cat => this.setState({catQ:cat}))
-            .catch({error:'An Error has Occurred'})
-        
-        PetfulApi.getAllDogs()
-            .then(dog => this.setState({dogQ:dog}))
-            .catch({error:'An Error has Occurred'})
-        //console.log(list)
+	};
 
-        
-        const changeList=()=>{
-            console.log('Hello')
-            let temp = adoptionQueue.dequeue()
-            let temp2 = namesArray.pop()
-            adoptionQueue.enqueue(temp2)
-            namesArray.push(temp)
-            console.log(adoptionQueue.display())
-        }
+	componentDidMount() {
+		PetfulApi.getAllCats().then((cat) => this.setState({ catQ: cat })).catch({ error: 'An Error has Occurred' });
 
-        let j = setInterval(changeList, 10000)
+		PetfulApi.getAllDogs().then((dog) => this.setState({ dogQ: dog })).catch({ error: 'An Error has Occurred' });
+		//console.log(list)
 
-    }
+		const changeList = () => {
+			console.log('Hello');
+			let temp = adoptionQueue.dequeue();
+			let temp2 = namesArray.pop();
+			adoptionQueue.enqueue(temp2);
+			namesArray.push(temp);
+			console.log(adoptionQueue.display());
+		};
 
-    addToQ=(name)=>{
-        adoptionQueue.enqueue(name)
-    }
+		let j = setInterval(changeList, 10000);
+	}
 
+	addToQ = (name) => {
+		adoptionQueue.enqueue(name);
+	};
 
-    clickHandler =(e)=>{
-        this.setState({wantsToRegister : true})
-    }
+	clickHandler = (e) => {
+		this.setState({ wantsToRegister: true });
+	};
 
-    submitHandler =(e)=>{
-        e.preventDefault()
-        let fullName = this.state.firstName + ' ' +  this.state.lastName
-        this.setState({wantsToRegister:false,
-                        registered:true})
-        this.addToQ(fullName)
-        console.log(fullName)
-    }
+	submitHandler = (e) => {
+		e.preventDefault();
+		let fullName = this.state.firstName + ' ' + this.state.lastName;
+		this.setState({
+			wantsToRegister: false,
+			registered: true
+		});
+		this.addToQ(fullName);
+		console.log(fullName);
+	};
 
-    handleFirstName=(e)=>{
-        e.preventDefault()
-        this.setState({firstName:e.target.value})
-    }
+	handleFirstName = (e) => {
+		e.preventDefault();
+		this.setState({ firstName: e.target.value });
+	};
 
-    handleLastName=(e)=>{
-        e.preventDefault()
-        this.setState({lastName:e.target.value})
-    }
+	handleLastName = (e) => {
+		e.preventDefault();
+		this.setState({ lastName: e.target.value });
+	};
 
-    // showDogs=()=>{
-    //     let temp = this.state.dogQ.map((dog, index) => {
-    //         return(
-    //             <li key={index}>{dog.name}</li>
-    //            )
-    //          })
-    //     //return temp
-    // }
+	adoptCat = () => {
+		PetfulApi.adoptCat().then((res) => {
+			window.alert('Congrats, you adopted a cat!');
+			let { catQ } = this.state;
+			catQ.shift();
+			this.setState({ catQ: catQ });
+		});
+	};
+	adoptDog = () => {
+		PetfulApi.adoptDog().then((res) => {
+			window.alert('Congrats, you adopted a dog!');
+			let { dogQ } = this.state;
+			dogQ.shift();
+			this.setState({ dogQ: dogQ });
+		});
+	};
 
 	render() {
 		return (
@@ -89,19 +91,48 @@ class AdoptionPage extends React.Component {
 				<div className="adoption">
 					<h1> Welcome to Petful Adoption Center! </h1>
 					<h2> Adoption Page </h2>
-					<div className="dog">
-						<h3>Dogs</h3>
-                         {this.state.dogQ.map((dog, index)=>{
-                            return  <li key={index}>{dog.name}</li>
-        
-                         })}
-					</div>
-					<div className="cat">
-						<h3>Cats</h3>
-                        {this.state.catQ.map((cat, index)=>{
-                            return  <li key={index}>{cat.name}</li>
-        
-                         })}
+					<div className="pet-list">
+						<div className="dog">
+							<h3>Dogs</h3>
+							{this.state.dogQ.map((dog, index) => {
+								return (
+									<div className="dog-list">
+										<img className="pet-img" src={dog.imageURL} />
+										<ul>
+											<li key={index}>Name: {dog.name}</li>
+											<li>Age: {dog.age}</li>
+											<li>Sex: {dog.sex}</li>
+											<li>Breed: {dog.breed}</li>
+											<li>Story: {dog.story}</li>
+										</ul>
+										<button type="button" onClick={this.adoptDog}>
+											Adopt
+										</button>
+									</div>
+								);
+							})}
+						</div>
+
+						<div className="cat">
+							<h3>Cats</h3>
+							{this.state.catQ.map((cat, index) => {
+								return (
+									<div className="cat-list">
+										<img className="pet-img" src={cat.imageURL} />
+										<ul>
+											<li key={index}>{cat.name}</li>
+											<li>{cat.age}</li>
+											<li>{cat.sex}</li>
+											<li>{cat.breed}</li>
+											<li>{cat.story}</li>
+										</ul>
+										<button type="button" onClick={this.adoptCat}>
+											Adopt
+										</button>
+									</div>
+								);
+							})}
+						</div>
 					</div>
 					<button type="button" onClick={this.clickHandler}>
 						Register
