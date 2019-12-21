@@ -4,25 +4,25 @@
 	flex-direction:column;  */
 	margin: 0px;
 }
-
+/* 
 .pet-list{
 	/* display:flex;
 	flex-direction: column;
 	justify-content: center;
 	align-content: center;
-	align-items:center; */
-}
+	align-items:center; 
+} */
 
-header{
-	display:block;
+header {
+	display: block;
 }
-
 
 h1,
-h2,h3 {
+h2,
+h3 {
 	text-align: center;
-	display:block;
-	width:100%;
+	display: block;
+	width: 100%;
 }
 
 .registration {
@@ -66,7 +66,7 @@ img {
 	/* height: 200px;
 	width: 350px; */
 	max-width: 300px;
-	max-height:250px ;
+	max-height: 250px;
 }
 
 li {
@@ -80,14 +80,14 @@ li {
 .dog-list {
 	margin: 10px;
 	/* width:100%; */
-	display:flex;
-	flex-wrap:nowrap;
+	display: flex;
+	flex-wrap: nowrap;
 	flex-direction: column;
 	/* flex-direction: row; */
 }
 .dog {
 	margin: 30px;
-	display:flex;
+	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: baseline;
@@ -100,8 +100,8 @@ div .cat-list {
 }
 .cat-list {
 	margin: 10px;
-	display:flex;
-	flex-wrap:nowrap;
+	display: flex;
+	flex-wrap: nowrap;
 	flex-direction: column;
 	justify-content: center;
 	align-content: center;
@@ -109,17 +109,16 @@ div .cat-list {
 }
 .cat {
 	margin-top: 20px;
-	display:flex;
+	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: baseline;
 	align-content: center;
-	margin-bottom:50px;
+	margin-bottom: 50px;
 }
 
-button{
-	display:block;
-	margin-left:auto;
-	margin-right:auto;
+button {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
-
