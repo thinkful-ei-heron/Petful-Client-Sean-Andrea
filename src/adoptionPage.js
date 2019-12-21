@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Queue, adoptionQueue, namesArray } from './Queue';
+import React from 'react';
+import { adoptionQueue, namesArray } from './Queue';
 import PetfulApi from './Services/petful-api-service';
 import './adoptionPage.css';
 
@@ -17,45 +17,49 @@ class AdoptionPage extends React.Component {
 		};
 	}
 
-	clickHandler=()=>{
-		this.setState({wantsToRegister:true})
-	}
+	clickHandler = () => {
+		this.setState({ wantsToRegister: true });
+	};
 
-	handleFirstName=(e)=>{
-		this.setState({firstName: e.target.value})
-	}
+	handleFirstName = (e) => {
+		this.setState({ firstName: e.target.value });
+	};
 
-	handleLastName=(e)=>{
-		this.setState({lastName: e.target.value})
-	}
+	handleLastName = (e) => {
+		this.setState({ lastName: e.target.value });
+	};
 
-	submitHandler=(e)=>{
-		e.preventDefault()
-		let fullName = this.state.firstName + ' ' + this.state.lastName
-		adoptionQueue.enqueue(fullName)
-		this.setState({wantsToRegister:false,
-						registered : true})
-		console.log(fullName)
-		console.log(adoptionQueue.display())
-	}
+	submitHandler = (e) => {
+		e.preventDefault();
+		let fullName = this.state.firstName + ' ' + this.state.lastName;
+		adoptionQueue.enqueue(fullName);
+		this.setState({
+			wantsToRegister: false,
+			registered: true
+		});
+		console.log(fullName);
+		console.log(adoptionQueue.display());
+	};
 
 	addToQ = (name) => {
 		adoptionQueue.enqueue(name);
 	};
 	adoptCat = () => {
 		PetfulApi.adoptCat().then((res) => {
-			window.alert('Congrats, you adopted a cat!');
+			// window.alert('Congrats, you adopted a cat!');
 			let { catQ } = this.state;
 			catQ.shift();
 			this.setState({ catQ: catQ });
+			this.props.changePage('CongratsPage');
 		});
 	};
 	adoptDog = () => {
 		PetfulApi.adoptDog().then((res) => {
-			window.alert('Congrats, you adopted a dog!');
+			// window.alert('Congrats, you adopted a dog!');
 			let { dogQ } = this.state;
 			dogQ.shift();
 			this.setState({ dogQ: dogQ });
+			this.props.changePage('CongratsPage');
 		});
 	};
 
@@ -71,7 +75,7 @@ class AdoptionPage extends React.Component {
 			let temp2 = namesArray.pop();
 			adoptionQueue.enqueue(temp2);
 			namesArray.push(temp);
-			console.log(adoptionQueue.display());
+			// console.log(adoptionQueue.display());
 		};
 
 		let j = setInterval(changeList, 10000);
@@ -89,7 +93,12 @@ class AdoptionPage extends React.Component {
 							{this.state.dogQ.map((dog, index) => {
 								return (
 									<div className="dog-list">
-										<img className="pet-img" key={index} src={dog.imageURL} />
+										<img
+											className="pet-img"
+											key={index}
+											src={dog.imageURL}
+											alt={dog.imageDescription}
+										/>
 										<ul>
 											<li key={index}>Name: {dog.name}</li>
 											<li>Age: {dog.age}</li>
@@ -110,13 +119,13 @@ class AdoptionPage extends React.Component {
 							{this.state.catQ.map((cat, index) => {
 								return (
 									<div className="cat-list">
-										<img className="pet-img" src={cat.imageURL} />
+										<img className="pet-img" src={cat.imageURL} alt={cat.imageDescription} />
 										<ul>
-											<li key={index}>{cat.name}</li>
-											<li>{cat.age}</li>
-											<li>{cat.sex}</li>
-											<li>{cat.breed}</li>
-											<li>{cat.story}</li>
+											<li key={index}>Name: {cat.name}</li>
+											<li>Age: {cat.age}</li>
+											<li>Sex: {cat.sex}</li>
+											<li>Breed: {cat.breed}</li>
+											<li>Story: {cat.story}</li>
 										</ul>
 										<button type="button" onClick={this.adoptCat}>
 											Adopt
