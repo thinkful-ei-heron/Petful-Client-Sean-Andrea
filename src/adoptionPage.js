@@ -74,15 +74,6 @@ class AdoptionPage extends React.Component {
         this.setState({lastName:e.target.value})
     }
 
-    // showDogs=()=>{
-    //     let temp = this.state.dogQ.map((dog, index) => {
-    //         return(
-    //             <li key={index}>{dog.name}</li>
-    //            )
-    //          })
-    //     //return temp
-    // }
-
 	render() {
 		return (
 			<div className="adoptionPage">
