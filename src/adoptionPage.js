@@ -12,8 +12,8 @@ class AdoptionPage extends React.Component {
             lastName:'',
             registered:false,
             numberInLine:'',
-            catQ:'',
-            dogQ:''
+            catQ:[],
+            dogQ:[]
         }
     }
 
@@ -91,10 +91,17 @@ class AdoptionPage extends React.Component {
 					<h2> Adoption Page </h2>
 					<div className="dog">
 						<h3>Dogs</h3>
-                         {}
+                         {this.state.dogQ.map((dog, index)=>{
+                            return  <li key={index}>{dog.name}</li>
+        
+                         })}
 					</div>
 					<div className="cat">
 						<h3>Cats</h3>
+                        {this.state.catQ.map((cat, index)=>{
+                            return  <li key={index}>{cat.name}</li>
+        
+                         })}
 					</div>
 					<button type="button" onClick={this.clickHandler}>
 						Register
