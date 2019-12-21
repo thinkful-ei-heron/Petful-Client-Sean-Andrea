@@ -20,6 +20,22 @@ class AdoptionPage extends React.Component {
 	addToQ = (name) => {
 		adoptionQueue.enqueue(name);
 	};
+	adoptCat = () => {
+		PetfulApi.adoptCat().then((res) => {
+			window.alert('Congrats, you adopted a cat!');
+			let { catQ } = this.state;
+			catQ.shift();
+			this.setState({ catQ: catQ });
+		});
+	};
+	adoptDog = () => {
+		PetfulApi.adoptDog().then((res) => {
+			window.alert('Congrats, you adopted a dog!');
+			let { dogQ } = this.state;
+			dogQ.shift();
+			this.setState({ dogQ: dogQ });
+		});
+	};
 
 	componentDidMount() {
 		PetfulApi.getAllCats().then((cat) => this.setState({ catQ: cat })).catch({ error: 'An Error has Occurred' });
