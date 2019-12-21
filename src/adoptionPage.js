@@ -17,6 +17,28 @@ class AdoptionPage extends React.Component {
 		};
 	}
 
+	clickHandler=()=>{
+		this.setState({wantsToRegister:true})
+	}
+
+	handleFirstName=(e)=>{
+		this.setState({firstName: e.target.value})
+	}
+
+	handleLastName=(e)=>{
+		this.setState({lastName: e.target.value})
+	}
+
+	submitHandler=(e)=>{
+		e.preventDefault()
+		let fullName = this.state.firstName + ' ' + this.state.lastName
+		adoptionQueue.enqueue(fullName)
+		this.setState({wantsToRegister:false,
+						registered : true})
+		console.log(fullName)
+		console.log(adoptionQueue.display())
+	}
+
 	addToQ = (name) => {
 		adoptionQueue.enqueue(name);
 	};
@@ -67,7 +89,7 @@ class AdoptionPage extends React.Component {
 							{this.state.dogQ.map((dog, index) => {
 								return (
 									<div className="dog-list">
-										<img className="pet-img" src={dog.imageURL} />
+										<img className="pet-img" key={index} src={dog.imageURL} />
 										<ul>
 											<li key={index}>Name: {dog.name}</li>
 											<li>Age: {dog.age}</li>
