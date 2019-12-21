@@ -13,7 +13,9 @@ class AdoptionPage extends React.Component {
 			registered: false,
 			numberInLine: '',
 			catQ: [],
-			dogQ: []
+			dogQ: [],
+			currentPet: '',
+			currentNewOwner: 'Fred Kreuger'
 		};
 	}
 
@@ -41,6 +43,10 @@ class AdoptionPage extends React.Component {
 		console.log(adoptionQueue.display());
 	};
 
+	message = () => {
+		return `Congratulations to ${this.state.currentNewOwner} and their new pet ${this.state.currentPet}`;
+	};
+
 	addToQ = (name) => {
 		adoptionQueue.enqueue(name);
 	};
@@ -64,15 +70,19 @@ class AdoptionPage extends React.Component {
 	};
 
 	componentDidMount() {
+		PetfulApi.enqueueCat('snuffles');
 		PetfulApi.getAllCats().then((cat) => this.setState({ catQ: cat })).catch({ error: 'An Error has Occurred' });
 
 		PetfulApi.getAllDogs().then((dog) => this.setState({ dogQ: dog })).catch({ error: 'An Error has Occurred' });
 		//console.log(list)
 
 		const changeList = () => {
-			console.log('Hello');
 			let temp = adoptionQueue.dequeue();
 			let temp2 = namesArray.pop();
+			this.setState({
+				currentNewOwner: temp,
+				currentPet: ''
+			});
 			adoptionQueue.enqueue(temp2);
 			namesArray.push(temp);
 			// console.log(adoptionQueue.display());
@@ -85,8 +95,11 @@ class AdoptionPage extends React.Component {
 		return (
 			<div className="adoptionPage">
 				<div className="adoption">
-					<h1> Welcome to Petful Adoption Center! </h1>
-					<h2> Adoption Page </h2>
+					<header>
+						<h1> Welcome to Petful Adoption Center! </h1>
+						<h2> Adoption Page </h2>
+						{this.message()}
+					</header>
 					<div className="pet-list">
 						<div className="dog">
 							<h3>Dogs</h3>
@@ -106,7 +119,7 @@ class AdoptionPage extends React.Component {
 											<li>Breed: {dog.breed}</li>
 											<li>Story: {dog.story}</li>
 										</ul>
-										<button type="button" onClick={this.adoptDog}>
+										<button type="button" key={index} onClick={this.adoptDog}>
 											Adopt
 										</button>
 									</div>

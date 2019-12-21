@@ -1,1 +1,9 @@
 
+*{
+    box-sizing: border-box;
+}
+
+.App{
+    height: 90vh;
+}
+
