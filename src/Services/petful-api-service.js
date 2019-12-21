@@ -28,7 +28,18 @@ const PetfulApi = {
 			}
 			return res.json();
 		});
-	}
+	},
+	enqueueCat(cat) {
+		return fetch(this.url + '/cats/allCats', { method: 'POST' }).then((res) => {
+			if (!res.ok) {
+				return res.json().then((e) => Promise.reject(e));
+			}
+			return res.json();
+		});
+	},
+	enqueueDog(dog) {
+
+	},
 };
 
 export default PetfulApi
