@@ -70,9 +70,8 @@ class AdoptionPage extends React.Component {
 	};
 
 	componentDidMount() {
-		PetfulApi.enqueueCat('snuffles');
+		//PetfulApi.enqueueCat('snuffles');
 		PetfulApi.getAllCats().then((cat) => this.setState({ catQ: cat })).catch({ error: 'An Error has Occurred' });
-
 		PetfulApi.getAllDogs().then((dog) => this.setState({ dogQ: dog })).catch({ error: 'An Error has Occurred' });
 		//console.log(list)
 
@@ -91,6 +90,17 @@ class AdoptionPage extends React.Component {
 		let j = setInterval(changeList, 10000);
 	}
 
+	// componentDidUpdate(){
+	// 	if(!this.state.catQ){
+	// 	PetfulApi.getAllCats().then((cat) => this.setState({ catQ: cat })).catch({ error: 'An Error has Occurred' });
+	// 	PetfulApi.getAllDogs().then((dog) => this.setState({ dogQ: dog })).catch({ error: 'An Error has Occurred' });
+	// 	}
+	// }
+
+	// componentWillUnmount(){
+	// 	PetfulApi.clearDogs()
+	// }
+
 	render() {
 		return (
 			<div className="adoptionPage">
@@ -105,21 +115,20 @@ class AdoptionPage extends React.Component {
 							<h3>Dogs</h3>
 							{this.state.dogQ.map((dog, index) => {
 								return (
-									<div className="dog-list">
+									<div className="dog-list" key={index+7}>
 										<img
 											className="pet-img"
-											key={index}
 											src={dog.imageURL}
 											alt={dog.imageDescription}
 										/>
 										<ul>
-											<li key={index}>Name: {dog.name}</li>
+											<li>Name: {dog.name}</li>
 											<li>Age: {dog.age}</li>
 											<li>Sex: {dog.sex}</li>
 											<li>Breed: {dog.breed}</li>
 											<li>Story: {dog.story}</li>
 										</ul>
-										<button type="button" key={index} onClick={this.adoptDog}>
+										<button type="button" onClick={this.adoptDog}>
 											Adopt
 										</button>
 									</div>
@@ -131,10 +140,10 @@ class AdoptionPage extends React.Component {
 							<h3>Cats</h3>
 							{this.state.catQ.map((cat, index) => {
 								return (
-									<div className="cat-list">
+									<div className="cat-list" key={index}>
 										<img className="pet-img" src={cat.imageURL} alt={cat.imageDescription} />
-										<ul>
-											<li key={index}>Name: {cat.name}</li>
+										<ul key={index}>
+											<li>Name: {cat.name}</li>
 											<li>Age: {cat.age}</li>
 											<li>Sex: {cat.sex}</li>
 											<li>Breed: {cat.breed}</li>
