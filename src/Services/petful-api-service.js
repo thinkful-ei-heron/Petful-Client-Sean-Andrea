@@ -29,17 +29,33 @@ const PetfulApi = {
 			return res.json();
 		});
 	},
-	enqueueCat(cat) {
-		return fetch(this.url + '/cats/allCats', { method: 'POST' }).then((res) => {
+	getAllUsers() {
+		return fetch(this.usrl + '/users/', {}).then((res) => {
 			if (!res.ok) {
 				return res.json().then((e) => Promise.reject(e));
 			}
 			return res.json();
 		});
 	},
-	enqueueDog(dog) {
-
+	addUserToQ(fullName) {
+		return fetch(this.usrl + '/users/', {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json'
+			},
+			body: JSON.stringify(fullName)
+		}).then((res) => {
+			if (!res.ok) {
+				return res.json().then((e) => Promise.reject(e));
+			}
+			return res.json();
+		});
 	},
+	removeUserFromQ() {
+		return fetch(this.url + '/users', {
+			method: 'DELETE'
+		});
+	}
 };
 
-export default PetfulApi
+export default PetfulApi;
