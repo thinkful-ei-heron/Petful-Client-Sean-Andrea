@@ -1,7 +1,7 @@
 # Petful Client
 A collaboration between Andrea Bender and Sean Cooper
 Live app: https://petful-client-sean-andrea.andreabender.now.sh/
-Server GitHub: https://github.com/thinkful-ei-heron/Petful-Server-Sean-Andrea.git
+Client GitHub: https://github.com/thinkful-ei-heron/Petful-Client-Sean-Andrea.git
 
 ## Summary
 Petful adopts dogs and cats to prospective families on a first come, first served basis.
