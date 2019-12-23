@@ -45,7 +45,19 @@ const PetfulApi = {
 		});
 	},
 	enqueueDog(dog) {
-
+		return fetch(this.url + '/dogs/allDogs', { 
+			method: 'POST', 
+			headers: {
+				'content-type':'application/json'
+			},  
+			body:JSON.stringify({dog})
+		 })
+		 .then((res) => {
+			if (!res.ok) {
+				return res.json().then((e) => Promise.reject(e));
+			}
+			return res.json();
+		});
 	},
 };
 

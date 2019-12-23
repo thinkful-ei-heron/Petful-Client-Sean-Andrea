@@ -15,7 +15,8 @@ class AdoptionPage extends React.Component {
 			catQ: [],
 			dogQ: [],
 			currentPet: '',
-			currentNewOwner: 'Fred Kreuger'
+			currentNewOwner: '',
+			turnToAdopt:false
 		};
 	}
 
@@ -37,14 +38,17 @@ class AdoptionPage extends React.Component {
 		adoptionQueue.enqueue(fullName);
 		this.setState({
 			wantsToRegister: false,
-			registered: true
+			registered: true,
+			numberInLine: adoptionQueue.size()+1
 		});
 		console.log(fullName);
 		console.log(adoptionQueue.display());
 	};
 
 	message = () => {
-		return `Congratulations to ${this.state.currentNewOwner} and their new pet ${this.state.currentPet}`;
+		if(this.state.currentNewOwner){
+			return `Congratulations to ${this.state.currentNewOwner} and their new pet ${this.state.currentPet}`;
+		}
 	};
 
 	addToQ = (name) => {
@@ -71,6 +75,7 @@ class AdoptionPage extends React.Component {
 
 	componentDidMount() {
 		//PetfulApi.enqueueCat('snuffles');
+		//PetfulApi.enqueueDog('snuffles');
 		PetfulApi.getAllCats().then((cat) => this.setState({ catQ: cat })).catch({ error: 'An Error has Occurred' });
 		PetfulApi.getAllDogs().then((dog) => this.setState({ dogQ: dog })).catch({ error: 'An Error has Occurred' });
 		//console.log(list)
@@ -78,18 +83,91 @@ class AdoptionPage extends React.Component {
 		const changeList = () => {
 			let temp = adoptionQueue.dequeue();
 			let temp2 = namesArray.pop();
-			this.setState({
-				currentNewOwner: temp,
-				currentPet: ''
-			});
+			let rand = Math.floor(Math.random()*2);
+			let isTurn = false;
+			let newPet = ''
 			adoptionQueue.enqueue(temp2);
 			namesArray.push(temp);
-			// console.log(adoptionQueue.display());
+			
+			console.log(rand)
+			if(rand == 1){
+				PetfulApi.adoptDog().then((res) => {
+					if(this.state.numberInLine === 1){
+						isTurn = true
+					}
+					let { dogQ } = this.state;
+					newPet = dogQ.shift();
+					dogQ.push(newPet)
+					// dogQ.enqueue(newPet)
+					this.setState({ dogQ: dogQ,
+					currentNewOwner:temp,
+					currentPet: newPet.name,
+					numberInLine: this.state.registered ? this.state.numberInLine - 1 : '',
+					turnToAdopt:isTurn });
+				})
+			} else {
+				PetfulApi.adoptCat().then((res) => {
+					if(this.state.numberInLine === 1){
+						isTurn = true
+					}
+					let { catQ } = this.state;
+					newPet = catQ.shift();
+					catQ.push(newPet)
+					this.setState({ catQ: catQ,
+					currentNewOwner:temp,
+					currentPet: newPet.name,
+					numberInLine: this.state.registered ? this.state.numberInLine - 1 : '',
+				    turnToAdopt:isTurn });
+			})
+			// this.setState({
+			// 	currentNewOwner: temp,
+			// 	currentPet: ''
+			// });
+			//adoptionQueue.enqueue(temp2);
+			// namesArray.push(temp);
+			// if(rand==1){
+			// 	let dogs = [...this.state.dogQ]
+			// 	dogs.push(newPet)
+			// 	console.log('hello der')
+			// 	this.setState({ dogQ : dogs })
+			// } else if(rand ==0){
+			// 	let cats = [...this.state.catQ]
+			// 	cats.push(newPet)
+			// 	console.log('hello der')
+			// 	this.setState({ catQ : cats })
+			// }
+			// console.log(adoptionQueue.display());	
 		};
 
-		let j = setInterval(changeList, 10000);
+		//if(this.state.registered){
+				//this.setState({numberInLine : this.state.numberInLine - 1})
+		//	}
 	}
 
+	this.interval = setInterval(changeList, 10000);
+   }
+
+	componentWillUnmount(){
+		clearInterval(this.interval);
+		//PetfulApi.getAllCats().then((cat) => this.setState({ catQ: cat })).catch({ error: 'An Error has Occurred' });
+		//PetfulApi.getAllDogs().then((dog) => this.setState({ dogQ: dog })).catch({ error: 'An Error has Occurred' });
+	}
+
+	showButton(){
+		if(this.state.turnToAdopt){
+			return(
+                <button type="button" disabled={!this.state.turnToAdopt} onClick={this.adoptDog}>
+						Adopt
+			    </button>		
+			)
+		} else {
+			return(
+			<div>
+				<p> Please Adopt Me! </p>
+			</div>
+			)
+		}
+	}
 	// componentDidUpdate(){
 	// 	if(!this.state.catQ){
 	// 	PetfulApi.getAllCats().then((cat) => this.setState({ catQ: cat })).catch({ error: 'An Error has Occurred' });
@@ -115,7 +193,7 @@ class AdoptionPage extends React.Component {
 							<h3>Dogs</h3>
 							{this.state.dogQ.map((dog, index) => {
 								return (
-									<div className="dog-list" key={index+7}>
+									<div className="dog-list" key={index}>
 										<img
 											className="pet-img"
 											src={dog.imageURL}
@@ -128,9 +206,10 @@ class AdoptionPage extends React.Component {
 											<li>Breed: {dog.breed}</li>
 											<li>Story: {dog.story}</li>
 										</ul>
-										<button type="button" onClick={this.adoptDog}>
+										{this.showButton()}
+										{/* <button type="button" disabled={!this.state.turnToAdopt} onClick={this.adoptDog}>
 											Adopt
-										</button>
+										</button> */}
 									</div>
 								);
 							})}
@@ -142,16 +221,17 @@ class AdoptionPage extends React.Component {
 								return (
 									<div className="cat-list" key={index}>
 										<img className="pet-img" src={cat.imageURL} alt={cat.imageDescription} />
-										<ul key={index}>
+										<ul>
 											<li>Name: {cat.name}</li>
 											<li>Age: {cat.age}</li>
 											<li>Sex: {cat.sex}</li>
 											<li>Breed: {cat.breed}</li>
 											<li>Story: {cat.story}</li>
 										</ul>
-										<button type="button" onClick={this.adoptCat}>
+										{this.showButton()}
+										{/* <button type="button" disabled={!this.state.turnToAdopt} onClick={this.adoptCat}>
 											Adopt
-										</button>
+										</button> */}
 									</div>
 								);
 							})}
@@ -192,7 +272,7 @@ class AdoptionPage extends React.Component {
 					<div className="registeredUser">
 						<h4>
 							Thank you for your interest, {this.state.firstName} {this.state.lastName}! You are currently
-							number {adoptionQueue.size()} in line
+							number {this.state.numberInLine} in line
 						</h4>
 					</div>
 				) : null}
