@@ -1,12 +1,12 @@
 .adoptionPage {
 	box-sizing: border-box;
 	margin-left: 30px;
-	margin-right:30px;
+	margin-right: 30px;
 	height: 100%;
 }
 
-.adoption{
-	display:flex;
+.adoption {
+	display: flex;
 	flex-direction: column;
 }
 
@@ -14,11 +14,13 @@ header {
 	display: block;
 }
 
-h1{
-	margin-top:10px;
+h1 {
+	margin-top: 10px;
 }
 
-h1,h2,h3 {
+h1,
+h2,
+h3 {
 	text-align: center;
 	display: block;
 	width: 100%;
@@ -62,13 +64,13 @@ h1,h2,h3 {
 	opacity: 0.8;
 }
 img {
-	width:10vw;
-	height:7vw;
+	width: 10vw;
+	height: 7vw;
 }
 
 li {
 	list-style: none;
-	margin:5px;
+	margin: 5px;
 }
 
 .dog-list {
@@ -107,19 +109,95 @@ button {
 	margin-right: auto;
 }
 
-#registerButton{
+#registerButton {
 	font-size: 1.5em;
-	margin-bottom:25px;
+	margin-bottom: 25px;
 }
 
-ul{
-	margin:0px;
-	padding:0px;
+ul {
+	margin: 0px;
+	padding: 0px;
 }
 
-#story{
-	display:inline-flex;
+#story {
+	display: inline-flex;
 	max-width: 10vw;
 	text-overflow: ellipsis;
 }
 
+@media only screen and (max-width: 600px) {
+	.adoptionPage {
+		box-sizing: border-box;
+		margin-left: 30px;
+		margin-right: 30px;
+		height: 100%;
+	}
+
+	.adoption {
+		display: flex;
+		flex-direction: column;
+	}
+	.dog {
+		margin: 20px;
+		display: flex;
+		/* flex-wrap: nowrap; */
+		/* justify-content: center; */
+		/* align-items: flex-start; */
+		flex-direction: column;
+	}
+	img {
+		width: 50vw;
+		height: 30vw;
+	}
+	.dog-list {
+		justify-content: center;
+		align-items: center;
+		margin: auto;
+	}
+	.cat-list {
+		justify-content: center;
+		align-items: center;
+		margin: auto;
+	}
+	.cat {
+		margin: 20px;
+		display: flex;
+		/* flex-wrap: nowrap; */
+		/* justify-content: center; */
+		/* align-items: flex-start; */
+		flex-direction: column;
+	}
+}
+
+@media only screen and (max-width: 1020px) {
+	.dog {
+		margin: 20px;
+		display: flex;
+		/* flex-wrap: nowrap; */
+		/* justify-content: center; */
+		/* align-items: flex-start; */
+		flex-direction: column;
+	}
+	img {
+		width: 50vw;
+		height: 30vw;
+	}
+	.dog-list {
+		justify-content: center;
+		align-items: center;
+		margin: auto;
+	}
+	.cat-list {
+		justify-content: center;
+		align-items: center;
+		margin: auto;
+	}
+	.cat {
+		margin: 20px;
+		display: flex;
+		/* flex-wrap: nowrap; */
+		/* justify-content: center; */
+		/* align-items: flex-start; */
+		flex-direction: column;
+	}
+}
