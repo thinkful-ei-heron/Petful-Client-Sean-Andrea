@@ -20,8 +20,9 @@ class LandingPage extends React.Component {
 				<p> Petful adopts dogs and cats to prospective families on a first come, first served basis.</p>
 				<p> In the event that it is your turn to adopt, you have a choice of whichever dog or cat (or</p>
 				<p> possibly both) has been waiting the longest to be adopted. </p>
-				<p> If you are interested in adopting, please feel free to register on the following page. </p>
-				<button className="landing-btn" type="button" onClick={this.clickHandler}>
+				<p> If you are interested in adopting, please feel free to register by clicking on </p>
+				<p>the "Register" link at the bottom of the following page. </p>
+				<button className="landing-btn" type="button" onClick={this.clickHandler} id='continue'>
 					Continue
 				</button>
 			</div>

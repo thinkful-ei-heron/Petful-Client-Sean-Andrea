@@ -4,9 +4,17 @@
 }
 .landing-img {
 	border-radius: 3%;
-	margin-top: 1em;
+	margin-top: 3em;
 }
 button {
 	height: 2.5em;
 	border-radius: 10%;
+}
+
+#continue{
+	margin-top: 40px;
+}
+
+h1{
+	margin-top: 50px;
 }
